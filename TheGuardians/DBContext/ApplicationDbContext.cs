@@ -36,67 +36,67 @@ namespace TheGuardians.DBContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Agendum>(entity =>
-            //{
-            //    entity.Property(e => e.HeroeId).ValueGeneratedNever();
+            modelBuilder.Entity<Agendum>(entity =>
+            {
+                entity.Property(e => e.HeroeId).ValueGeneratedNever();
 
-            //    entity.HasOne(d => d.Heroe)
-            //        .WithOne(p => p.Agendum)
-            //        .HasForeignKey<Agendum>(d => d.HeroeId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_Agenda_Heroe");
-            //});
+                entity.HasOne(d => d.Heroe)
+                    .WithOne(p => p.Agendum)
+                    .HasForeignKey<Agendum>(d => d.HeroeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Agenda_Heroe");
+            });
 
-            //modelBuilder.Entity<Combate>(entity =>
-            //{
-            //    entity.HasOne(d => d.Heroe)
-            //        .WithMany()
-            //        .HasForeignKey(d => d.HeroeId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_Combate_Heroe");
+            modelBuilder.Entity<Combate>(entity =>
+            {
+                entity.HasOne(d => d.Heroe)
+                    .WithMany()
+                    .HasForeignKey(d => d.HeroeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Combate_Heroe");
 
-            //    entity.HasOne(d => d.Villano)
-            //        .WithMany()
-            //        .HasForeignKey(d => d.VillanoId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_Combate_Villano");
-            //});
+                entity.HasOne(d => d.Villano)
+                    .WithMany()
+                    .HasForeignKey(d => d.VillanoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Combate_Villano");
+            });
 
-            //modelBuilder.Entity<ContactoPersonal>(entity =>
-            //{
-            //    entity.HasOne(d => d.Heroe)
-            //        .WithMany(p => p.ContactoPersonals)
-            //        .HasForeignKey(d => d.HeroeId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_ContactoPersonal_Heroe");
-            //});
+            modelBuilder.Entity<ContactoPersonal>(entity =>
+            {
+                entity.HasOne(d => d.Heroe)
+                    .WithMany(p => p.ContactoPersonals)
+                    .HasForeignKey(d => d.HeroeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ContactoPersonal_Heroe");
+            });
 
-            //modelBuilder.Entity<Heroe>(entity =>
-            //{
-            //    entity.HasOne(d => d.IdPersonaNavigation)
-            //        .WithMany(p => p.Heroes)
-            //        .HasForeignKey(d => d.IdPersona)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_Heroe_Persona");
-            //});
+            modelBuilder.Entity<Heroe>(entity =>
+            {
+                entity.HasOne(d => d.IdPersonaNavigation)
+                    .WithMany(p => p.Heroes)
+                    .HasForeignKey(d => d.IdPersona)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Heroe_Persona");
+            });
 
-            //modelBuilder.Entity<Patrocinador>(entity =>
-            //{
-            //    entity.HasOne(d => d.Heroe)
-            //        .WithMany(p => p.Patrocinadors)
-            //        .HasForeignKey(d => d.HeroeId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_Patrocinador_Heroe");
-            //});
+            modelBuilder.Entity<Patrocinador>(entity =>
+            {
+                entity.HasOne(d => d.Heroe)
+                    .WithMany(p => p.Patrocinadors)
+                    .HasForeignKey(d => d.HeroeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Patrocinador_Heroe");
+            });
 
-            //modelBuilder.Entity<Villano>(entity =>
-            //{
-            //    entity.HasOne(d => d.Persona)
-            //        .WithMany(p => p.Villanos)
-            //        .HasForeignKey(d => d.PersonaId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_Villano_Persona");
-            //});
+            modelBuilder.Entity<Villano>(entity =>
+            {
+                entity.HasOne(d => d.Persona)
+                    .WithMany(p => p.Villanos)
+                    .HasForeignKey(d => d.PersonaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Villano_Persona");
+            });
 
             OnModelCreatingPartial(modelBuilder);
         }
