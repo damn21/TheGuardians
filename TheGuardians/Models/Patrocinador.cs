@@ -12,8 +12,8 @@ namespace TheGuardians.Models
         [Key]
         [Column("p_id")]
         public int PId { get; set; }
-        [Column("monto", TypeName = "numeric(20, 13)")]
-        public decimal Monto { get; set; }
+        [Column("monto")]
+        public int Monto { get; set; }
         [Required]
         [Column("origen_dinero")]
         [StringLength(100)]

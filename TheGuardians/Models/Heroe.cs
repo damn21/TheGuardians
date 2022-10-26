@@ -18,10 +18,11 @@ namespace TheGuardians.Models
         [Key]
         [Column("heroe_id")]
         public int HeroeId { get; set; }
+
+        [ForeignKey("IdPersona")]
         [Column("id_persona")]
         public int IdPersona { get; set; }
 
-        [ForeignKey("IdPersona")]
         [InverseProperty("Heroes")]
         public virtual Persona IdPersonaNavigation { get; set; }
         [InverseProperty("Heroe")]
