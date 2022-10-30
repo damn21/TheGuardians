@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TheGuardians.Models.Heroe">
+    <Position X="8.25" Y="5.25" Width="2" />
+    <AssociationLine Name="ContactoPersonals" Type="TheGuardians.Models.ContactoPersonal" ManuallyRouted="true">
+      <Path>
+        <Point X="10.25" Y="6.575" />
+        <Point X="11.7" Y="6.575" />
+        <Point X="11.7" Y="8.84" />
+        <Point X="11.25" Y="8.84" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Patrocinadors" Type="TheGuardians.Models.Patrocinador" ManuallyRouted="true">
+      <Path>
+        <Point X="10.031" Y="6.997" />
+        <Point X="10.031" Y="6.595" />
+        <Point X="5.867" Y="6.595" />
+        <Point X="5.867" Y="8.094" />
+        <Point X="7" Y="8.094" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAACgAAAAAAgAACAAAAIAAAAAAAA=</HashCode>
+      <FileName>Models\Heroe.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Agendum" />
+      <Property Name="IdPersonaNavigation" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ContactoPersonals" />
+      <Property Name="Patrocinadors" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TheGuardians.Models.Villano">
+    <Position X="16.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAEAiAAAAA=</HashCode>
+      <FileName>Models\Villano.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Persona" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TheGuardians.Models.Persona">
+    <Position X="11.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAYAAAAEQCAAgAAAAAAAAgBAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\Persona.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TheGuardians.Models.ContactoPersonal">
+    <Position X="11.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\ContactoPersonal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TheGuardians.Models.Agendum">
+    <Position X="8.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAGAAAAAAAABAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\Agendum.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TheGuardians.Models.Combate">
+    <Position X="12.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAACAAAAAABAAAAAAAAAAAAAAAAAIAAg=</HashCode>
+      <FileName>Models\Combate.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Heroe" />
+      <Property Name="Villano" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TheGuardians.Models.Patrocinador">
+    <Position X="5.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAIAACAAAAAAAAAAACAAAg=</HashCode>
+      <FileName>Models\Patrocinador.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

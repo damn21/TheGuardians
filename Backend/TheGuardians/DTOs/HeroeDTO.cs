@@ -14,5 +14,9 @@ namespace TheGuardians.DTOs
         public int IdPersona { get; set; }
 
         public virtual PersonaDTO IdPersonaNavigation { get; set; }
+
+        public virtual ICollection<ContactoPersonalDTO> ContactoPersonals { get; set; }
+
+
     }
 }

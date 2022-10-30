@@ -38,5 +38,11 @@ namespace TheGuardians.Controllers
 
         }
 
+        //[HttpGet]
+        //public async Task<ActionResult<List<Patrocinador>>> MayorMonto(int id)
+        //{
+        //    var heroe = await context.Patrocinadors.
+        //}
+
     }
 }

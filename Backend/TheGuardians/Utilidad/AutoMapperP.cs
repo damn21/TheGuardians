@@ -13,7 +13,10 @@ namespace TheGuardians.Utilidad
             CreateMap<Heroe, HeroeDTO>();
             CreateMap<PatrocinadorCreationDTO, Patrocinador>();
             CreateMap<Patrocinador, PatrocinadorDTO>();
-            CreateMap<CombateCreationDTO, Combate>();
+            CreateMap<Combate, CombateDTO>();
+            CreateMap<VillanoCreationDTO, Villano>();
+            CreateMap<Villano, VillanoDTO>();
+            CreateMap<ContactoPersonal, ContactoPersonalDTO>();
         }
 
     }

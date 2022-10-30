@@ -43,10 +43,31 @@ namespace TheGuardians.Controllers
 
         }
 
+        [HttpPost]
+        [Route("Agenda")]
+        public async Task<ActionResult> Agendar([FromBody] Agendum agendum)
+        {
+            context.Add(agendum);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
         [HttpGet]
         public async Task<List<HeroeDTO>> GetHeroes()
         {
-            var heroes = await context.Heroes.Include(x => x.IdPersonaNavigation).ToListAsync();
+            var heroes = await context.Heroes.Include(x => x.IdPersonaNavigation)
+                .Include(y => y.ContactoPersonals)
+                .ToListAsync();
+            return mapper.Map<List<HeroeDTO>>(heroes);
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<List<HeroeDTO>> GetHeroes([FromRoute]int id)
+        {
+            var heroes = await context.Heroes.Include(x => x.IdPersonaNavigation)
+                .Where(y => y.HeroeId.Equals(id))
+                .ToListAsync();
             return mapper.Map<List<HeroeDTO>>(heroes);
         }
 
@@ -57,9 +78,9 @@ namespace TheGuardians.Controllers
             var heroes = await context.Heroes.Include(x => x.IdPersonaNavigation)
                 .Where(y => y.IdPersonaNavigation.Nombre.Contains(nombre)).ToListAsync();
 
-            if (heroes == null)
+            if (!heroes.Any())
             {
-                return NotFound();
+                return NotFound("Heroe no encontrado");
             }
 
             return mapper.Map<List<HeroeDTO>>(heroes);
@@ -82,17 +103,21 @@ namespace TheGuardians.Controllers
 
         [HttpGet]
         [Route("ContactoPersonal")]
-        public async Task<ActionResult<ContactoPersonal>> ObtenerHeroeContacto(string contacto)
+        public async Task<ActionResult<List<ContactoPersonalDTO>>> ObtenerHeroeContacto(string contacto)
         {
-            var contactoPersonal = await context.ContactoPersonals.Include(y => y.Heroe.IdPersonaNavigation)
-                .FirstOrDefaultAsync(x => x.Nombre.Contains(contacto));
 
-            if (contactoPersonal == null)
+            var heroes = await context.ContactoPersonals
+                //.Include(x => x.Heroe.ContactoPersonals)
+                .Include(z => z.Heroe.IdPersonaNavigation)
+                .Where(y => y.Nombre.Contains(contacto)).ToListAsync();
+
+
+            if (heroes == null)
             {
                 return NotFound();
             }
 
-            return contactoPersonal;
+            return mapper.Map<List<ContactoPersonalDTO>>(heroes);
         }
 
     }
