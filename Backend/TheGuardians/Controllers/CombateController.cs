@@ -27,8 +27,31 @@ namespace TheGuardians.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Combate>>> GetAll()
         {
-            return await context.Combates.Include(x => x.Heroe)
-                .Include(y => y.Villano).ToListAsync();
+            //return await context.Combates.Include(x => x.Heroe)
+            //    .Include(y => y.Villano).ToListAsync();
+            var combates = await context.Combates.Join(
+               context.Heroes,
+               c => c.HeroeId,
+               h => h.HeroeId, (c, h) => new { c, h }
+               )
+                .Join(context.Villanos,
+                x => x.c.VillanoId,
+                v => v.VillanoId, (x, v) => new { x, v }
+               )
+                .Join(context.Personas,
+                y => y.v.PersonaId,
+                p => p.Id, (y, p) => new { y, p }
+                )
+                //.GroupBy(z => new { z.y.x.c.HeroeId, z.y.v.VillanoId, z.p.Apodo, z.y.x.c.Resultado })
+                .Select(z => new
+                {
+                    z.y.x.c.HeroeId,
+                    z.y.v.VillanoId,
+                    Apodo = z.p.Apodo,
+                    Resultado = z.y.x.c.Resultado
+                }).ToListAsync();
+
+            return Ok(combates);
         }
 
         [HttpGet]
@@ -81,11 +104,12 @@ namespace TheGuardians.Controllers
         }
 
         [HttpGet]
-        [Route("heroes/peleas")]
-        public async Task<ActionResult<List<Combate>>> Peleas()
+        [Route("heroes/peleas/{id:int}")]
+        public async Task<ActionResult<List<Combate>>> Peleas([FromRoute] int id)
         {
 
-            var heroesM = await context.Combates.GroupBy(x => new { x.HeroeId, x.VillanoId })
+            var heroesM = await context.Combates.Where(z => z.HeroeId.Equals(id))
+                .GroupBy(x => new { x.HeroeId, x.VillanoId })
                        .Select(y => new {
                            y.Key.HeroeId,
                            y.Key.VillanoId,
