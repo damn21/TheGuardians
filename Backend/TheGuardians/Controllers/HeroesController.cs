@@ -120,5 +120,53 @@ namespace TheGuardians.Controllers
             return mapper.Map<List<ContactoPersonalDTO>>(heroes);
         }
 
+        [HttpGet]
+        [Route("edad/adolescentes")]
+        public async Task<IActionResult> adolescentes()
+        {
+            var heroesA = await context.Heroes.Join(
+                      context.Personas,
+                      h => h.IdPersona,
+                      p => p.Id,
+                      (h, p) => new { h, p }
+                      ).Where(k => k.p.Edad < 21)
+                      .GroupBy(x => new {
+                          x.h.HeroeId,
+                          x.p.Apodo,
+                          x.p.Edad
+                      })
+                      .Select(y => new {
+                          y.Key.HeroeId,
+                          y.Key.Apodo,
+                          y.Key.Edad
+                      }).OrderByDescending(z => z.Edad).ToListAsync();
+
+            return Ok(heroesA);
+        }
+
+        [HttpGet]
+        [Route("edad/mayores")]
+        public async Task<IActionResult> mayores()
+        {
+            var heroesA = await context.Heroes.Join(
+                      context.Personas,
+                      h => h.IdPersona,
+                      p => p.Id,
+                      (h, p) => new { h, p }
+                      ).Where(k => k.p.Edad > 21)
+                      .GroupBy(x => new {
+                          x.h.HeroeId,
+                          x.p.Apodo,
+                          x.p.Edad
+                      })
+                      .Select(y => new {
+                          y.Key.HeroeId,
+                          y.Key.Apodo,
+                          y.Key.Edad
+                      }).OrderByDescending(z => z.Edad).ToListAsync();
+
+            return Ok(heroesA);
+        }
+
     }
 }
