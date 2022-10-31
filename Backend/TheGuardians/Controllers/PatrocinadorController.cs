@@ -38,11 +38,33 @@ namespace TheGuardians.Controllers
 
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult<List<Patrocinador>>> MayorMonto(int id)
-        //{
-        //    var heroe = await context.Patrocinadors.
-        //}
+        [HttpGet]
+        [Route("Mayor_Monto")]
+        public async Task<IActionResult> MayorMonto(int id)
+        {
+            var patrocinadorM = await context.Heroes
+                .Join(
+                context.Patrocinadors,
+                x => x.HeroeId,
+                p => p.HeroeId,
+                (x,p) => new {x,p}
+                )
+                .Join(
+                context.Personas,
+                y => y.x.IdPersona,
+                ps => ps.Id, (y,ps) => new {y,ps}
+                ).Where(k => k.y.x.HeroeId.Equals(id))
+                .GroupBy(z => new { z.y.x.HeroeId, z.y.p.PId, z.y.p.Monto, z.y.p.OrigenDinero})
+                .Select(rs => new {
+                    rs.Key.HeroeId,
+                    rs.Key.PId,
+                    Monto = rs.Key.Monto,
+                    rs.Key.OrigenDinero
+                    })
+                .OrderByDescending(b => b.Monto).Take(1).ToArrayAsync();
+
+            return Ok(patrocinadorM);
+        }
 
     }
 }
