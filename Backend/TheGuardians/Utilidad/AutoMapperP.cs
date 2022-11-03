@@ -17,6 +17,7 @@ namespace TheGuardians.Utilidad
             CreateMap<VillanoCreationDTO, Villano>();
             CreateMap<Villano, VillanoDTO>();
             CreateMap<ContactoPersonal, ContactoPersonalDTO>();
+            CreateMap<AgendumDTO, Agendum>();
         }
 
     }
