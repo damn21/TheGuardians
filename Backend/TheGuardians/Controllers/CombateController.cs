@@ -47,6 +47,7 @@ namespace TheGuardians.Controllers
                 {
                     z.y.x.c.HeroeId,
                     z.y.v.VillanoId,
+                    ApodoH = z.y.x.c.Heroe.IdPersonaNavigation.Apodo,
                     Apodo = z.p.Apodo,
                     Resultado = z.y.x.c.Resultado
                 }).ToListAsync();
@@ -60,7 +61,7 @@ namespace TheGuardians.Controllers
         {
 
              var heroesM = await context.Combates.Where(z => z.Resultado.Contains("Ganador"))
-                .GroupBy(x => x.HeroeId)
+                .GroupBy(x => x.Heroe.IdPersonaNavigation.Apodo)
                         .Select(group => new {
                             Heroe = group.Key,
                             Victorias = group.Count()
@@ -78,6 +79,10 @@ namespace TheGuardians.Controllers
         {
 
             var villano = await context.Combates
+                //.Join(context.Villanos,
+                //c1 => c1.VillanoId,
+                //v => v.VillanoId, (c1,v) => new {c1,v}
+                //)
                .Join(context.Heroes, 
                c => c.HeroeId,
                h => h.HeroeId, (c, h) => new { c, h }
@@ -88,12 +93,13 @@ namespace TheGuardians.Controllers
                )
                .Where(z => z.p.c.Resultado.Contains("Ganador"))
                .Where(p1 => p1.p1.Edad<21)
-               .GroupBy(x => new { x.p.c.VillanoId, x.p.c.HeroeId, x.p1.Apodo, x.p1.Edad })
+               .GroupBy(x => new { x.p.c.Villano.Persona.Apodo, x.p.c.HeroeId, x.p1.Edad
+               
+               })
                        .Select(y => new {
-                           y.Key.VillanoId,
-                           y.Key.HeroeId,
                            Edad_Heroe = y.Key.Edad,
-                           Nombre_Heroe = y.Key.Apodo,
+                           Nombre_Villano = y.Key.Apodo,
+                           Nombre_Heroe = y.Key.HeroeId,
                            Count = y.Count()
                        })
 
@@ -109,10 +115,11 @@ namespace TheGuardians.Controllers
         {
 
             var heroesM = await context.Combates.Where(z => z.HeroeId.Equals(id))
-                .GroupBy(x => new { x.HeroeId, x.VillanoId })
+                .GroupBy(x => new { x.HeroeId, x.VillanoId, x.Villano.Persona.Apodo})
                        .Select(y => new {
                            y.Key.HeroeId,
                            y.Key.VillanoId,
+                           y.Key.Apodo,
                            Count = y.Count()
                        })
                        .OrderByDescending(y => y.Count).Take(1).ToListAsync();

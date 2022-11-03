@@ -45,11 +45,12 @@ namespace TheGuardians.Controllers
 
         [HttpPost]
         [Route("Agenda")]
-        public async Task<ActionResult> Agendar([FromBody] Agendum agendum)
+        public async Task<ActionResult> Agendar([FromBody] AgendumDTO agendumDTO)
         {
-            context.Add(agendum);
+            var agenda = mapper.Map<Agendum>(agendumDTO);
+            context.Add(agenda);
             await context.SaveChangesAsync();
-            return Ok();
+            return Ok("Fecha registrada");
         }
 
         [HttpGet]
