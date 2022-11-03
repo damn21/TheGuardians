@@ -12,6 +12,8 @@ namespace TheGuardians.DTOs
         [Column("origen_dinero")]
         [StringLength(100)]
         [Unicode(false)]
+
+        public string Nombre { get; set; }
         public string OrigenDinero { get; set; }
         [Column("heroe_id")]
         public int HeroeId { get; set; }

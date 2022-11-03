@@ -13,6 +13,8 @@ namespace TheGuardians.DTOs
 
         [ForeignKey("HeroeId")]
         public int HeroeId { get; set; }
+
+        public string TipoR { get; set; }
         //public virtual HeroeDTO Heroe { get; set; }
 
 
