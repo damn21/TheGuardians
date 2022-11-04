@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TheGuardians.Models
+﻿namespace TheGuardians.Models
 {
     public partial class Villano
     {
