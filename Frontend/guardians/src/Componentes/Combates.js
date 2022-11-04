@@ -53,7 +53,7 @@ function Combates() {
 
     return (
       
-      <div className='table-responsive' >
+      <div className='wrapper' >
         
   <table className='table table-bordered'>
           <thead>
@@ -77,7 +77,7 @@ function Combates() {
         <Button 
         onClick = {() => {
         setModalOpen(true)
-      }} className='btn btn-success'>Top 3</Button>
+      }} className='btn btn-success'>Top 3</Button>{' '}
       
       <Button 
         onClick = {() => {

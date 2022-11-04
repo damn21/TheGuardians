@@ -6,14 +6,13 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { MDBContainer } from "mdb-react-ui-kit";
 
 function Heroe() {
 
   const getHeroesUrl = "https://localhost:7164/api/heroes";
   const getHeroesAdostes = "https://localhost:7164/api/heroes/edad/adolescentes"
   const getHeroesMayores = "https://localhost:7164/api/heroes/edad/mayores"
-  const getHeroesNombre = "https://localhost:7164/api/heroes/nombre?nombre"
+  // const getHeroesNombre = "https://localhost:7164/api/heroes/nombre?nombre"
 
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
