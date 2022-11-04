@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
 using TheGuardians.DBContext;
 using TheGuardians.DTOs;
 using TheGuardians.Models;
@@ -10,6 +9,7 @@ namespace TheGuardians.Controllers
 {
     [ApiController]
     [Route("api/heroes")]
+    [Produces("application/json")]
     public class HeroesController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -21,7 +21,8 @@ namespace TheGuardians.Controllers
             this.mapper = mapper;
         }
 
-        [HttpPost("AgregarHeroe")]
+
+        [HttpPost]
         public async Task<ActionResult> AgregarHeroe([FromBody] HeroeCreationDTO heroeCreationDTO)
         {
             var existeHeroeConElMismoApodo = await context.Personas
@@ -53,7 +54,18 @@ namespace TheGuardians.Controllers
             return Ok("Fecha registrada");
         }
 
+        /// <summary>
+        /// Obtiene todos los héroes registrados
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        /// <response code="200">Retorna lista</response>
+        /// <response code="400">Lista vacía</response>
+        /// <response code="500">Error</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<List<HeroeDTO>> GetHeroes()
         {
             var heroes = await context.Heroes.Include(x => x.IdPersonaNavigation)
@@ -62,9 +74,21 @@ namespace TheGuardians.Controllers
             return mapper.Map<List<HeroeDTO>>(heroes);
         }
 
+        /// <summary>
+        /// Obtiene un héroe especifico
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// 
+        /// <response code="200">Retorna lista</response>
+        /// <response code="400">Lista vacía</response>
+        /// <response code="500">Error</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("{id:int}")]
-        public async Task<List<HeroeDTO>> GetHeroes([FromRoute]int id)
+        public async Task<List<HeroeDTO>> GetHeroes([FromRoute] int id)
         {
             var heroes = await context.Heroes.Include(x => x.IdPersonaNavigation)
                 .Where(y => y.HeroeId.Equals(id))
@@ -72,7 +96,19 @@ namespace TheGuardians.Controllers
             return mapper.Map<List<HeroeDTO>>(heroes);
         }
 
+        /// <summary>
+        /// Obtiene un héroe por nombre
+        /// </summary>
+        /// <param name="nombre"></param>
+        /// <returns></returns>
+        /// 
+        /// <response code="200">Retorna lista</response>
+        /// <response code="400">Lista vacía</response>
+        /// <response code="500">Error</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("nombre")]
         public async Task<ActionResult<List<HeroeDTO>>> ObtenerHeroeNombre(string nombre)
         {
@@ -87,7 +123,19 @@ namespace TheGuardians.Controllers
             return mapper.Map<List<HeroeDTO>>(heroes);
         }
 
+        /// <summary>
+        /// Obtiene un héroe por habilidad
+        /// </summary>
+        /// <param name="habilidad"></param>
+        /// <returns></returns>
+        /// 
+        /// <response code="200">Retorna lista</response>
+        /// <response code="400">Lista vacía</response>
+        /// <response code="500">Error</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("habilidad")]
         public async Task<ActionResult<List<HeroeDTO>>> ObtenerHeroeHabilidad(string habilidad)
         {
@@ -102,7 +150,19 @@ namespace TheGuardians.Controllers
             return mapper.Map<List<HeroeDTO>>(heroes);
         }
 
+        /// <summary>
+        /// Obtiene un héroe por habilidad
+        /// </summary>
+        /// <param name="contacto"></param>
+        /// <returns></returns>
+        /// 
+        /// <response code="200">Retorna lista</response>
+        /// <response code="400">Lista vacía</response>
+        /// <response code="500">Lista vacía</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("ContactoPersonal")]
         public async Task<ActionResult<List<ContactoPersonalDTO>>> ObtenerHeroeContacto(string contacto)
         {
@@ -121,7 +181,20 @@ namespace TheGuardians.Controllers
             return mapper.Map<List<ContactoPersonalDTO>>(heroes);
         }
 
+        /// <summary>
+        /// Obtiene lista de héroes adolescentes (menores de 21)
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        /// <response code="200">Retorna lista</response>
+        /// <response code="400">Lista vacía</response>
+        /// <response code="500">Lista vacía</response>
+
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         [Route("edad/adolescentes")]
         public async Task<IActionResult> adolescentes()
         {
@@ -131,12 +204,14 @@ namespace TheGuardians.Controllers
                       p => p.Id,
                       (h, p) => new { h, p }
                       ).Where(k => k.p.Edad < 21)
-                      .GroupBy(x => new {
+                      .GroupBy(x => new
+                      {
                           x.h.HeroeId,
                           x.p.Apodo,
                           x.p.Edad
                       })
-                      .Select(y => new {
+                      .Select(y => new
+                      {
                           y.Key.HeroeId,
                           y.Key.Apodo,
                           y.Key.Edad
@@ -145,7 +220,20 @@ namespace TheGuardians.Controllers
             return Ok(heroesA);
         }
 
+        /// <summary>
+        /// Obtiene lista de héroes mayores
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        /// <response code="200">Retorna lista</response>
+        /// <response code="400">Lista vacía</response>
+        /// <response code="500">Lista vacía</response>
+
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         [Route("edad/mayores")]
         public async Task<IActionResult> mayores()
         {
@@ -155,12 +243,14 @@ namespace TheGuardians.Controllers
                       p => p.Id,
                       (h, p) => new { h, p }
                       ).Where(k => k.p.Edad > 21)
-                      .GroupBy(x => new {
+                      .GroupBy(x => new
+                      {
                           x.h.HeroeId,
                           x.p.Apodo,
                           x.p.Edad
                       })
-                      .Select(y => new {
+                      .Select(y => new
+                      {
                           y.Key.HeroeId,
                           y.Key.Apodo,
                           y.Key.Edad
