@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using TheGuardians.DBContext;
 
@@ -27,7 +28,22 @@ namespace TheGuardians
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIGuardians", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "WebAPIGuardians",
+                    Version = "v1",
+                    Description = "Reto propuesto #2, proyecto realizado en .Net Core 6.  API para manejar la información de The Guardians of Globe",
+                    Contact = new OpenApiContact
+                    {
+                        Email = "dmezae@uninorte.edu.co",
+                        Name = "Daniel Meza",
+                        Url = new Uri("https://github.com/damn21/TheGuardians/tree/master/Backend")
+                    }
+                });
+
+                // using System.Reflection;
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
             services.AddAutoMapper(typeof(Startup));

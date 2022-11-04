@@ -9,7 +9,7 @@ namespace TheGuardians.Utilidad
         public AutoMapperP()
         {
             CreateMap<HeroeCreationDTO, Heroe>();
-            CreateMap<PersonaDTO, Persona >().ReverseMap();
+            CreateMap<PersonaDTO, Persona>().ReverseMap();
             CreateMap<Heroe, HeroeDTO>();
             CreateMap<PatrocinadorCreationDTO, Patrocinador>();
             CreateMap<Patrocinador, PatrocinadorDTO>();
