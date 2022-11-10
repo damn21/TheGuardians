@@ -50,3 +50,11 @@ npm install
 ```
 npm start
 ```
+## Paquetes NuGet Back-End
+```
+AutoMapper.Extensions.Microsoft.DependencyInjection
+Microsoft.AspNetCore.Mvc.NewtonsoftJson
+Microsoft.Data.SqlClient
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+```
